@@ -1,14 +1,13 @@
 import React , { Component } from 'react';
 
-class Header extends Component {
+class Footer extends Component {
   render(){
     return (
-      <header>
+      <footer>
         {this.props.user ? 
           ( <div>
               <div>
-                <h2>Hello, {this.props.user.displayName}</h2>
-                <img src={this.props.user.photoURL} alt={this.props.user.displayName}/>
+                <p>Hello, {this.props.user.displayName}</p>
               </div>
               <button onClick={this.props.logout}>Log Out</button>
             </div>
@@ -16,9 +15,9 @@ class Header extends Component {
           : 
           <button onClick={this.props.login}>Log In</button>
       }
-      </header>
+      </footer>
     )
   }
 }
 
-export default Header;
+export default Footer;

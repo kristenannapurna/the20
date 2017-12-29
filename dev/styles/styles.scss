@@ -2,19 +2,23 @@ article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary
 .clearfix:after {visibility: hidden; display: block; font-size: 0; content: ''; clear: both; height: 0; }
 * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
 
-header div{
+footer div{
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: lightgray;
-  padding: 20px;
+  padding: 5px 10px;
   
 }
 
-header div img{
-  width: 100px;
-  border-radius: 50%;
+header{
+  text-align: center;
 }
+header p{
+  margin: 0;
+  padding: 10px;
+}
+
 
 button {
   border: none;
@@ -22,9 +26,27 @@ button {
   color: white;
   border-radius: none !important;
   -webkit-appearance: none;
-  padding: 20px 10px;
 }
 
-.list{
-  padding: 50px 20px;
+.checkin-buttons{
+  height: calc(100vh - 70px - 38px);
+  // display: flex;
+  // flex-direction: column;
+}
+
+
+.checkin-buttons a{
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 50px;
+}
+#eighty{
+  background: lightgreen;
+}
+
+#twenty{
+  background: indianred;
 }
