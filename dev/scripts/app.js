@@ -32,7 +32,8 @@ class App extends React.Component {
       user: null,
       resetDay: 1,
       eighty: 50,
-      twenty: 50
+      twenty: 50, 
+      mealsTracked: 0
     }
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
@@ -42,12 +43,24 @@ class App extends React.Component {
     auth.onAuthStateChanged((user) => {
       if(user) {
         const dbRef = firebase.database().ref(`/users/${user.uid}/`);
+        const dbRefUser = firebase.database().ref(`/users/${user.uid}/user`);
+
+        const { displayName, email, photoURL} = user;
+        dbRefUser.set({displayName, email, photoURL});
     
         dbRef.on('value', (snapshot) => {
 
           console.log(snapshot.val())
           
           let { eighty, twenty } = snapshot.val().data[yyyy][mm][dd];
+
+          if(twenty === undefined){
+            twenty = 0;
+          }
+
+          if (eighty === undefined){
+            eighty = 0;
+          }
 
           let totalLogged = eighty + twenty;
           
@@ -56,7 +69,8 @@ class App extends React.Component {
           
           this.setState({
             eighty,
-            twenty
+            twenty, 
+            mealsTracked: totalLogged
           })
 
         });
@@ -105,7 +119,7 @@ class App extends React.Component {
       return (
         <div>
           <div className="homepage">
-            <DateHeader resetDay={this.state.resetDay} /> 
+            <DateHeader resetDay={this.state.resetDay} mealsTracked={this.state.mealsTracked} /> 
             <Buttons eighty={this.state.eighty} twenty={this.state.twenty} updateRatio={this.updateRatio}/>
             <Footer user={this.state.user} login={this.login} logout={this.logout}/>
           </div>
