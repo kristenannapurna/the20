@@ -33,7 +33,8 @@ class App extends React.Component {
       resetDay: 1,
       eighty: 50,
       twenty: 50, 
-      mealsTracked: 0
+      mealsTracked: 0,
+      data: {}
     }
     this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
@@ -50,9 +51,10 @@ class App extends React.Component {
     
         dbRef.on('value', (snapshot) => {
 
-          console.log(snapshot.val())
           
+          const { data } = snapshot.val()
           let { eighty, twenty } = snapshot.val().data[yyyy][mm][dd];
+
 
           if(twenty === undefined){
             twenty = 0;
@@ -70,7 +72,8 @@ class App extends React.Component {
           this.setState({
             eighty,
             twenty, 
-            mealsTracked: totalLogged
+            mealsTracked: totalLogged,
+            data
           })
 
         });
@@ -102,7 +105,6 @@ class App extends React.Component {
 
   }
   updateRatio(type){
-    // e.preventDefault();
     
     const dbRef = firebase.database().ref(`/users/${this.state.user.uid}/data/${yyyy}/${mm}/${dd}/${type}`);
 
@@ -124,7 +126,7 @@ class App extends React.Component {
             <Footer user={this.state.user} login={this.login} logout={this.logout}/>
           </div>
           <div className="dashboard">
-            <Dashboard />
+            <Dashboard data={this.state.data} today={{mm, dd, yyyy}} />
           </div>
         </div>
       )
