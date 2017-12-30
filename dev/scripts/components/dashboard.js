@@ -72,17 +72,28 @@ class Dashboard extends React.Component {
     return(
       <div className="dashboard">
         <h2>Dashboard</h2>
-        <section>
-          <h3>Daily</h3>
-          {this.getDailyData()}
-        </section>
-        <section>
-          <h3>Week To Date</h3>
-        </section>
-        <section>
-          <h3>All Time</h3>
-          {this.getAllTimeData()}
-        </section>
+          {this.props.data[this.props.today.yyyy] ?
+
+            (
+            <div>
+            <section>
+              <h3>Daily</h3>
+              {this.getDailyData()}
+            </section>
+            <section>
+              <h3>Week To Date</h3>
+            </section>
+            <section>
+              <h3>All Time</h3>
+              {this.getAllTimeData()}
+            </section>
+            </div>
+            )
+            :
+            <div>Start Tracking to see some data!</div>
+          }
+
+       
       </div>
     )
   }

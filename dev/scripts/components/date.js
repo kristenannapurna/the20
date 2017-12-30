@@ -17,11 +17,15 @@ const dd = today.getDay();
 
 const DateHeader = ({ resetDay, mealsTracked }) => {
   const mealsDots = () => {
-    let markup = [];
-    for(let i = 0; i <= mealsTracked; i++){
-      markup.push(<span key={i}>🔵</span>)
+    if (mealsTracked > 0) {
+      let markup = [];
+      for(let i = 0; i < mealsTracked; i++){
+        markup.push(<span key={i}>🔵</span>)
+      }
+      return markup;
+    } else {
+      return <span>0</span>
     }
-    return markup;
   }
   return (
     <header>

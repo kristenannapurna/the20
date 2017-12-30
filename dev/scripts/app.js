@@ -53,28 +53,31 @@ class App extends React.Component {
 
           
           const { data } = snapshot.val()
-          let { eighty, twenty } = snapshot.val().data[yyyy][mm][dd];
+          if(data){
+            let { eighty, twenty } = snapshot.val().data[yyyy][mm][dd];
+  
+  
+            if(twenty === undefined){
+              twenty = 0;
+            }
+  
+            if (eighty === undefined){
+              eighty = 0;
+            }
+  
+            let totalLogged = eighty + twenty;
+            
+            eighty = (eighty / totalLogged) * 100;
+            twenty = (twenty / totalLogged) * 100;
+            
+            this.setState({
+              eighty,
+              twenty, 
+              mealsTracked: totalLogged,
+              data
+            })
 
-
-          if(twenty === undefined){
-            twenty = 0;
           }
-
-          if (eighty === undefined){
-            eighty = 0;
-          }
-
-          let totalLogged = eighty + twenty;
-          
-          eighty = (eighty / totalLogged) * 100;
-          twenty = (twenty / totalLogged) * 100;
-          
-          this.setState({
-            eighty,
-            twenty, 
-            mealsTracked: totalLogged,
-            data
-          })
 
         });
         this.setState({ user });
@@ -121,13 +124,29 @@ class App extends React.Component {
       return (
         <div>
           <div className="homepage">
-            <DateHeader resetDay={this.state.resetDay} mealsTracked={this.state.mealsTracked} /> 
-            <Buttons eighty={this.state.eighty} twenty={this.state.twenty} updateRatio={this.updateRatio}/>
+            {this.state.user ? 
+             ( <div>
+               <DateHeader resetDay={this.state.resetDay} mealsTracked={this.state.mealsTracked} /> 
+              <Buttons eighty={this.state.eighty} twenty={this.state.twenty} updateRatio={this.updateRatio}/>
+              </div>
+            )
+              :
+              <section className="loggedOut">
+                <p>Must be logged in to see your stats and track data!</p>
+              </section>
+            
+            }
             <Footer user={this.state.user} login={this.login} logout={this.logout}/>
           </div>
-          <div className="dashboard">
-            <Dashboard data={this.state.data} today={{mm, dd, yyyy}} />
-          </div>
+          {
+            this.state.user ? 
+          ( <div className="dashboard">
+              <Dashboard data={this.state.data} today={{mm, dd, yyyy}} />
+            </div>
+          )
+          :
+          <div></div>
+          }
         </div>
       )
     }
