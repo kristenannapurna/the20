@@ -4,9 +4,15 @@ class Dashboard extends React.Component {
   constructor(){
     super();
     this.state = {
-      dailyData: {},
+      dailyData: {
+        eighty: 0,
+        twenty: 0
+      },
       weeklyData: {},
-      allTimeData: {}
+      allTimeData: {
+        eighty: 0,
+        twenty: 0
+      }
     }
     this.getDailyData = this.getDailyData.bind(this);
     this.getAllTimeData = this.getAllTimeData.bind(this);
@@ -34,12 +40,21 @@ class Dashboard extends React.Component {
 
       
       const allTimeData = {
-        eighty: allTimeEighty,
-        twenty: allTimeTwenty
+        eighty: allTimeEighty || 0,
+        twenty: allTimeTwenty || 0
+      }
+
+      let { eighty, twenty } = data[today.yyyy][today.mm][today.dd];
+
+
+
+      const dailyData = {
+        eighty: eighty || 0,
+        twenty: twenty || 0
       }
 
       this.setState({
-        dailyData: data[today.yyyy][today.mm][today.dd],
+        dailyData,
         allTimeData
       })
     }

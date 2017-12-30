@@ -51,7 +51,6 @@ class App extends React.Component {
     
         dbRef.on('value', (snapshot) => {
 
-          
           const { data } = snapshot.val()
           if(data){
             let { eighty, twenty } = snapshot.val().data[yyyy][mm][dd];
@@ -88,13 +87,21 @@ class App extends React.Component {
 
   }
   logout(){
+    const dbRef = firebase.database().ref(`/users/${this.state.user.uid}/`);
+
+    dbRef.off();
+
     auth.signOut()
       .then(() => {
         this.setState({
           user: null,
-          clearList: true
+          data: {}
         });
       });
+
+
+
+    
   }
   login(){
     auth.signInWithPopup(provider)
