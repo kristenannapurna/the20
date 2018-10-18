@@ -1,5 +1,3 @@
-# Getting Started
+# The 20
 
-1. `git clone` this repo
-2. `npm install`
-3. enjoy!
+Proof of concept app that tracks a user's habits over a day and reports on ratio of "good" vs "bad" habits. 
